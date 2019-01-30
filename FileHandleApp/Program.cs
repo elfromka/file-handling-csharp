@@ -15,6 +15,12 @@ namespace FileHandleApp
             Console.ReadLine();
         }
 
+        // should be implemented...
+        static bool MyTryParseMethod()
+        {
+            return false;
+        }
+
         static void Catching()
         {
             try
@@ -42,7 +48,7 @@ namespace FileHandleApp
             }
             else
             {
-                using (StreamWriter correctNumbers = File.AppendText("correctNumbers.txt")) ;
+                using (StreamWriter correctNumbers = File.AppendText("correctNumbers.txt"));
             }
 
             if (File.Exists("incorrectNumbers.txt"))
@@ -51,7 +57,7 @@ namespace FileHandleApp
             }
             else
             {
-                using (StreamWriter incorrectNumbers = File.AppendText("incorrectNumbers.txt")) ;
+                using (StreamWriter incorrectNumbers = File.AppendText("incorrectNumbers.txt"));
             }
         }
 
@@ -61,7 +67,9 @@ namespace FileHandleApp
             {
                 Console.WriteLine("The file with numbers exists!");
                 CheckForTwoFiles();
-                FileReader();
+                Console.WriteLine();
+                Console.WriteLine("These are the numbers from the file: ");
+                FileReadAndDisplay();
             }
             else
             {
@@ -70,29 +78,73 @@ namespace FileHandleApp
         }
 
         // reading the file
-        private static void FileReader(string fileName = "numbers.txt")
+        private static void FileReadAndDisplay(string fileName = "numbers.txt")
+        {
+            using (StreamReader sr = new StreamReader(fileName))
+            {
+                string line;
+               
+                while ((line = sr.ReadLine()) != null)
+                {
+                    //Console.WriteLine(line);
+                }
+
+                VerifyNumber();
+            }
+        }
+
+        private static void VerifyNumber(string fileName = "numbers.txt")
         {
             using (StreamReader sr = new StreamReader(fileName))
             {
                 string line;
 
+                List<int> correctNumbersList = new List<int>();
+                List<int> incorrectNumbersList = new List<int>();
+
                 while ((line = sr.ReadLine()) != null)
                 {
-                    Console.WriteLine(line);
-                }
+                    int result = 0;
+                    if (int.TryParse(line, out result))
+                    {
+                        correctNumbersList.Add(result);
+                    }
+                    else
+                    {
+                        incorrectNumbersList.Add(result);
+                    }
 
-                Console.ReadKey();
+                    correctNumbersList.ForEach(Console.WriteLine);
+                    incorrectNumbersList.ForEach(Console.WriteLine);
+                    Console.ReadKey();
+                }
             }
+
+            //string correctNumberFile = "correctNumbers.txt";
+
+            //using (StreamWriter cn = new StreamWriter(correctNumberFile))
+            //{
+            //    cn.WriteLine(line, true);
+            //}
+
+            //    Console.WriteLine(line);
+            //string incorrectNumberFile = "incorrectNumbers.txt";
+
+            //using (StreamWriter inc = new StreamWriter(incorrectNumberFile))
+            //{
+            //    inc.WriteLine(line, true);
+            //}
+            //}
         }
 
         // writing in the file
+        // append true to not overwrite the existing data in the file
+        // just for test !!!
         private static void FileWriter()
         {
             var names = new string[] { "Orsi", "Csharp" };
             string fileName = "numbers.txt";
 
-            // append true to not overwrite the existing data in the file
-            // just for test
             using (StreamWriter sw = new StreamWriter(fileName, true))
             {
                 foreach (var name in names)
