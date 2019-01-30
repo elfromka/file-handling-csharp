@@ -34,11 +34,33 @@ namespace FileHandleApp
             }
         }
 
+        private static void CheckForTwoFiles()
+        {
+            if (File.Exists("correctNumbers.txt"))
+            {
+                Console.WriteLine("correctNumbers.txt exists!");
+            }
+            else
+            {
+                using (StreamWriter correctNumbers = File.AppendText("correctNumbers.txt")) ;
+            }
+
+            if (File.Exists("incorrectNumbers.txt"))
+            {
+                Console.WriteLine("incorrectNumbers.txt exists!");
+            }
+            else
+            {
+                using (StreamWriter incorrectNumbers = File.AppendText("incorrectNumbers.txt")) ;
+            }
+        }
+
         private static void CheckForFile()
         {
             if (File.Exists("numbers.txt"))
             {
                 Console.WriteLine("The file with numbers exists!");
+                CheckForTwoFiles();
                 FileReader();
             }
             else
@@ -61,7 +83,6 @@ namespace FileHandleApp
 
                 Console.ReadKey();
             }
-           
         }
 
         // writing in the file
