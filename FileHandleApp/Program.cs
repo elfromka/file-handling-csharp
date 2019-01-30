@@ -11,9 +11,27 @@ namespace FileHandleApp
     {
         static void Main(string[] args)
         {
-            //FileWriter();
-            //FileReader();
-            CheckForFile();
+            Catching();
+            Console.ReadLine();
+        }
+
+        static void Catching()
+        {
+            try
+            {
+                CheckForFile();
+            }
+            catch (NoFileFoundException e)
+            {
+                Console.WriteLine("NoFileFoundException: {0}", e.Message);
+            }
+        }
+
+        public class NoFileFoundException : Exception
+        {
+            public NoFileFoundException(string message) : base(message)
+            {
+            }
         }
 
         private static void CheckForFile()
@@ -25,7 +43,7 @@ namespace FileHandleApp
             }
             else
             {
-                throw new Exception("The file is missing!");
+                throw (new NoFileFoundException("ERROR! The file is missing!"));
             }
         }
 
