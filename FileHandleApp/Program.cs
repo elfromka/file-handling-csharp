@@ -30,6 +30,7 @@ namespace FileHandleApp
                 {
                     Console.WriteLine("FOREACH ITEM: " + asciibyte);
                 }
+
             }
             return false;
         }
