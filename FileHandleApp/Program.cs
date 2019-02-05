@@ -16,8 +16,21 @@ namespace FileHandleApp
         }
 
         // should be implemented...
-        static bool MyTryParseMethod()
+        static bool MyTryParseMethod(string data)
         {
+            // converting the data into ascii code
+            // between 48-57 included are numbers
+            // 32 is space
+            Console.WriteLine(data);
+
+            byte[] asciiBytes = Encoding.ASCII.GetBytes(data);
+            foreach (int asciibyte in asciiBytes)
+            {
+                if (asciibyte != 32 && (asciibyte >=48 && asciibyte <=57))
+                {
+                    Console.WriteLine("FOREACH ITEM: " + asciibyte);
+                }
+            }
             return false;
         }
 
@@ -83,13 +96,10 @@ namespace FileHandleApp
             using (StreamReader sr = new StreamReader(fileName))
             {
                 string line;
-               
                 while ((line = sr.ReadLine()) != null)
                 {
-                    //Console.WriteLine(line);
+                    MyTryParseMethod(line);
                 }
-
-                VerifyNumber();
             }
         }
 
@@ -120,21 +130,6 @@ namespace FileHandleApp
                 }
             }
 
-            //string correctNumberFile = "correctNumbers.txt";
-
-            //using (StreamWriter cn = new StreamWriter(correctNumberFile))
-            //{
-            //    cn.WriteLine(line, true);
-            //}
-
-            //    Console.WriteLine(line);
-            //string incorrectNumberFile = "incorrectNumbers.txt";
-
-            //using (StreamWriter inc = new StreamWriter(incorrectNumberFile))
-            //{
-            //    inc.WriteLine(line, true);
-            //}
-            //}
         }
 
         // writing in the file
